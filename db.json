@@ -1,0 +1,25 @@
+{
+  "devices": [
+    {
+      "id": 1,
+      "brand": "Samsung",
+      "model": "Galaxy S23",
+      "price": 74999,
+      "available": true
+    },
+    {
+      "id": 2,
+      "brand": "Apple",
+      "model": "iPhone 14",
+      "price": 79999,
+      "available": true
+    },
+    {
+      "id": 3,
+      "brand": "Xiaomi",
+      "model": "Mi 11",
+      "price": 59999,
+      "available": false
+    }
+  ]
+}
