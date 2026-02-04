@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import Spinner from "../components/Global-components/Spinner";
 import { getDevices } from "../Api/deviceApi";
+import DeviceCard from '../components/Device-components/DeviceCard';
 
 const Devices = () => {
   const [devices,setDevices]=useState([]);
@@ -28,13 +29,11 @@ const Devices = () => {
         {loading ? (
           <Spinner loading={loading}/>
         ) : (
-          <ul>
-            {devices.map((device)=>(
-              <li key={String(device.id)}>
-                {device.brand} {device.model} - ₹{device.price}
-              </li>
+          <div className="space-y-4">
+            {devices.map((device) => (
+              <DeviceCard key={device.id} device={device} />
             ))}
-          </ul>
+          </div>
         )}
       </div>
   )
