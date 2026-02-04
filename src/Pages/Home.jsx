@@ -1,19 +1,45 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import Header from "../components/Global-components/Header";
+import Spinner from "../components/Global-components/Spinner";
+import { getDevices } from "../Api/deviceApi";
 
 const Home = () => {
+  const [devices,setDevices]=useState([]);
+  const[loading,setLoading]=useState(true);
+
+  useEffect(()=>{
+    const fetchDevices=async()=>{
+      try{
+        const res=await getDevices();
+        setDevices(res);
+      }
+      catch(error){
+        console.error("Failed to fetch Devices",error.message);
+      }
+      finally{
+        setLoading(false);
+      }
+    };
+
+    fetchDevices();
+  },[]);
+
   return (
     <>
       <Header/>
 
       <div className="p-6">
-        <h1 className="text-2xl font-bold">
-          Device Comparison App
-        </h1>
-
-        <p className="mt-2 text-gray-600">
-          Compare phones side by side
-        </p>
+        {loading ? (
+          <Spinner loading={loading}/>
+        ) : (
+          <ul>
+            {devices.map((device)=>(
+              <li>
+                {device.brand} {device.model} - ₹{device.price}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </>
   );
