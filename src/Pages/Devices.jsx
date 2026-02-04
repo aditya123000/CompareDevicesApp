@@ -38,20 +38,33 @@ const Devices = () => {
         </p>
       </div>
     );
-
   }
 
+
+
   return (
-      <div className="p-6">
-        {loading ? (
-          <Spinner loading={loading}/>
-        ) : (
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {devices.map((device) => (
-              <DeviceCard key={device.id} device={device} />
-            ))}
+      <div className='flex flex-col gap-12'>
+        <section className="mb-10">
+          <h1 className="text-3xl font-bold text-slate-50">
+            Devices
+          </h1>
+          <p className="mt-2 text-slate-400 max-w-xl">
+            Browse and compare smartphones based on your preferences.
+          </p>
+        </section>
+        <section>
+          <div className="p-6">
+            {loading ? (
+              <Spinner loading={loading}/>
+            ) : (
+              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {devices.map((device) => (
+                  <DeviceCard key={device.id} device={device} />
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </section>
       </div>
   )
 }

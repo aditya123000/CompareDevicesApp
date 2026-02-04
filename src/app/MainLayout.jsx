@@ -1,14 +1,22 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet,useLocation } from "react-router-dom";
 import Navbar from "../components/Global-components/Navbar";
 import Footer from "../components/Global-components/Footer";
+import ScrollToTop from "../components/Global-components/ScrollToTop";
+
 
 const MainLayout = () => {
+
+  const location = useLocation();
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-900 text-slate-50">
       <Navbar />
       <main className="flex-1 max-w-7xl mx-auto px-6 py-8 w-full">
-        <Outlet />
+        <div key={location.pathname} className="animate-fade-in">
+          <ScrollToTop />
+          <Outlet />
+        </div>
       </main>
       <Footer />
     </div>
