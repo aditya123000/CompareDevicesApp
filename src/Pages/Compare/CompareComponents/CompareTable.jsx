@@ -2,6 +2,13 @@ import React from "react";
 import { useCompare } from "@/context/CompareContext";
 
 const specs = ["Brand","Display","Processor","Battery","Price"];
+const SPEC_KEY_MAP = {Brand: "brand",Display: "display",Processor: "processor",Battery: "battery",Price: "price",};
+
+const getSpecValue = (device, spec) => {
+  const key = SPEC_KEY_MAP[spec];
+  return device[key] ?? "—";
+};
+
 
 const CompareTable = () => {
   const { selectedDevices } = useCompare();
@@ -40,7 +47,7 @@ const CompareTable = () => {
 
             {selectedDevices.map((device) => (
               <div key={device.id} className="p-4 text-slate-300 text-center border-l border-slate-700">
-                —
+                {getSpecValue(device, spec)}
               </div>
             ))}
           </div>
