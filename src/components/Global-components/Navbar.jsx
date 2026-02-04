@@ -5,15 +5,15 @@ import { NavLink } from "react-router-dom";
 
 const linkClass=({isActive}) =>
   isActive
-    ? "text-black font-semibold"
-    : "text-gray-600 hover:text-black";
+    ? "text-sky-400 font-semibold"
+    : "text-slate-300 hover:text-sky-300";
 
 const Navbar = () => {
 
   return (
-    <nav className="border-b bg-white">
+    <nav className="border-b border-slate-800 bg-slate-900">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-800">
+        <h1 className="text-xl font-bold text-sky-400">
           DeviceCompare
         </h1>
 
