@@ -23,12 +23,22 @@ const Devices = () => {
 
     fetchDevices();
   },[]);
-  
+
   if (loading) {
     return <Spinner loading={loading} />;
   }
   if (devices.length === 0) {
-    return <p className="p-6">Device not found</p>;
+    return (
+      <div className="p-6 flex flex-col items-center justify-center text-center">
+        <p className="text-gray-700 text-lg font-medium">
+          No devices to display
+        </p>
+        <p className="text-gray-500 text-sm mt-1">
+          Please check back later or try again.
+        </p>
+      </div>
+    );
+
   }
 
   return (
