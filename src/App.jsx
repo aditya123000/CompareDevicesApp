@@ -1,9 +1,10 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainLayout from "./app/MainLayout";
-import AppLayout from "./app/AppLayout";
+import MainLayout from "./Layouts/MainLayout";
+import AppLayout from "./Layouts/AppLayout";
 import Home from "./Pages/Home";
 import Devices from "./Pages/Devices";
+import Compare from "./Pages/Compare/Compare";
 import NotFound from "./Pages/NotFound";
 
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
         {
           path: "/devices",
           element: <Devices />,
+        },
+        { 
+          path: "/compare", 
+          element: <Compare /> 
         },
       ],
     },

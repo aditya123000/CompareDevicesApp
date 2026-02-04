@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DeviceCard = ({device}) => {
+const DeviceCard = ({device,isSelected,onToggleCompare}) => {
     const {brand,model,price,available} = device;
 
     if (!device || Object.keys(device).length === 0) {
@@ -22,6 +22,19 @@ const DeviceCard = ({device}) => {
                 {available ? "Available" : "Out of stock"}
             </p>
         )}
+        <button
+            onClick={() => onToggleCompare(device)}
+            className={`
+                mt-4 w-full py-2 rounded-md text-sm font-medium transition
+                ${
+                isSelected
+                    ? "bg-rose-500/10 text-rose-400 hover:bg-rose-500/20"
+                    : "bg-sky-500/10 text-sky-400 hover:bg-sky-500/20"
+                }
+            `}
+            >
+            {isSelected ? "Remove from Compare" : "Add to Compare"}
+        </button>
     </div>
   )
 }
