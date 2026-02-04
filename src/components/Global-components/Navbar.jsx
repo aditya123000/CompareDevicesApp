@@ -1,6 +1,15 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+
+
+
+const linkClass=({isActive}) =>
+  isActive
+    ? "text-black font-semibold"
+    : "text-gray-600 hover:text-black";
 
 const Navbar = () => {
+
   return (
     <nav className="border-b bg-white">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -9,9 +18,9 @@ const Navbar = () => {
         </h1>
 
         <ul className="flex gap-8 text-gray-600 font-medium">
-          <li className="cursor-pointer hover:text-black">Home</li>
-          <li className="cursor-pointer hover:text-black">Devices</li>
-          <li className="cursor-pointer hover:text-black">Compare</li>
+          <NavLink to="/" end className={linkClass}>Home</NavLink>
+          <NavLink to="/devices" end className={linkClass}>Devices</NavLink>
+          <NavLink to="/compare" end className={linkClass}>Compare</NavLink>
         </ul>
       </div>
     </nav>
