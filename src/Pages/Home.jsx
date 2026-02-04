@@ -34,7 +34,7 @@ const Home = () => {
         ) : (
           <ul>
             {devices.map((device)=>(
-              <li>
+              <li key={String(device.id)}>
                 {device.brand} {device.model} - ₹{device.price}
               </li>
             ))}
