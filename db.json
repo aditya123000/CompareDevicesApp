@@ -20,6 +20,34 @@
       "model": "Mi 11",
       "price": 59999,
       "available": false
+    },
+    {
+      "id": 4,
+      "brand": "OnePlus",
+      "model": "OnePlus 11",
+      "price": 61999,
+      "available": true
+    },
+    {
+      "id": 5,
+      "brand": "Google",
+      "model": "Pixel 7",
+      "price": 59999,
+      "available": true
+    },
+    {
+      "id": 6,
+      "brand": "Samsung",
+      "model": "Galaxy A54",
+      "price": 38999,
+      "available": false
+    },
+    {
+      "id": 7,
+      "brand": "Apple",
+      "model": "iPhone SE",
+      "price": 49999,
+      "available": true
     }
   ]
 }
