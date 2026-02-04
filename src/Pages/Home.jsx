@@ -3,20 +3,25 @@ import SearchBar from "../components/Global-components/SearchBar";
 
 const Home = () => {
   return (
-    <section className="flex flex-col gap-6">
-      <div className="max-w-2xl">
-        <h1 className="text-4xl font-bold text-gray-900 leading-tight">
-          Compare smartphones the smart way
-        </h1>
+    <div className="flex flex-col gap-16">
+      {/* HERO SECTION */}
+      <section className="bg-gray-50 rounded-xl p-8">
+        <div className="max-w-2xl flex flex-col gap-6">
+          <h1 className="text-4xl font-bold text-gray-900 leading-tight">
+            Compare smartphones the smart way
+          </h1>
 
-        <p className="mt-3 text-gray-600 text-lg">
-          Find, compare, and choose the best device for your needs — all in one place.
-        </p>
-      </div>
+          <p className="text-gray-600 text-lg">
+            Find, compare, and choose the best device for your needs — all in one place.
+          </p>
 
-      <SearchBar />
-      <section className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-        <div className="p-4">
+          <SearchBar />
+        </div>
+      </section>
+
+      {/* GUIDANCE SECTION */}
+      <section className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+        <div className="p-6 border rounded-lg bg-white">
           <h3 className="font-semibold text-gray-800">
             Search Devices
           </h3>
@@ -25,7 +30,7 @@ const Home = () => {
           </p>
         </div>
 
-        <div className="p-4">
+        <div className="p-6 border rounded-lg bg-white">
           <h3 className="font-semibold text-gray-800">
             Compare Specs
           </h3>
@@ -34,7 +39,7 @@ const Home = () => {
           </p>
         </div>
 
-        <div className="p-4">
+        <div className="p-6 border rounded-lg bg-white">
           <h3 className="font-semibold text-gray-800">
             Choose Confidently
           </h3>
@@ -43,8 +48,7 @@ const Home = () => {
           </p>
         </div>
       </section>
-
-    </section>
+    </div>
   );
 };
 
