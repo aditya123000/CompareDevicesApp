@@ -9,6 +9,19 @@ const getSpecValue = (device, spec) => {
   return device[key] ?? "—";
 };
 
+const formatSpecValue = (spec, value) => {
+  if (value === "—") return value;
+
+  switch (spec) {
+    case "Price":
+      return `₹${value.toLocaleString("en-IN")}`;
+
+    default:
+      return value;
+  }
+};
+
+
 
 const CompareTable = () => {
   const { selectedDevices } = useCompare();
@@ -47,7 +60,7 @@ const CompareTable = () => {
 
             {selectedDevices.map((device) => (
               <div key={device.id} className="p-4 text-slate-300 text-center border-l border-slate-700">
-                {getSpecValue(device, spec)}
+                {formatSpecValue(spec, getSpecValue(device, spec))}
               </div>
             ))}
           </div>
