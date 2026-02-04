@@ -23,13 +23,20 @@ const Devices = () => {
 
     fetchDevices();
   },[]);
+  
+  if (loading) {
+    return <Spinner loading={loading} />;
+  }
+  if (devices.length === 0) {
+    return <p className="p-6">Device not found</p>;
+  }
 
   return (
       <div className="p-6">
         {loading ? (
           <Spinner loading={loading}/>
         ) : (
-          <div className="space-y-4">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {devices.map((device) => (
               <DeviceCard key={device.id} device={device} />
             ))}
