@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <header className="border-b p-4">
       <h2 className="text-xl font-semibold">
-        DeviceCompare
+        Device-Compare
       </h2>
     </header>
   );
