@@ -1,6 +1,10 @@
 import React from "react";
+import { useCompare } from "../../context/CompareContext";
 
 const Compare = () => {
+
+  const { selectedDevices } = useCompare();
+
   return (
     <div className="flex flex-col gap-12">
       {/* Page Header */}

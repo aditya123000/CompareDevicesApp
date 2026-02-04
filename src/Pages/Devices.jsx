@@ -2,28 +2,17 @@ import React,{useEffect,useState} from 'react';
 import Spinner from "../components/Global-components/Spinner";
 import { getDevices } from "../Api/deviceApi";
 import DeviceCard from '../components/Device-components/DeviceCard';
+import { useCompare } from "../context/CompareContext";
 import { useNavigate } from "react-router-dom";
 
 const Devices = () => {
   const [devices,setDevices]=useState([]);
   const[loading,setLoading]=useState(true);
-  const [selectedDevices, setSelectedDevices] = useState([]);
   const navigate = useNavigate();
+  const { selectedDevices,toggleCompare } = useCompare();
 
 
-  const handleToggleCompare = (device) => {
-    const isSelected = selectedDevices.some(
-      (d) => d.id === device.id
-    );
-    if (isSelected) {
-      setSelectedDevices((prev) =>
-        prev.filter((d) => d.id !== device.id)
-      );
-    } else {
-      if (selectedDevices.length === 3) return;
-      setSelectedDevices((prev) => [...prev, device]);
-    }
-  };
+
 
   useEffect(()=>{
     const fetchDevices=async()=>{
@@ -106,7 +95,7 @@ const Devices = () => {
                       key={device.id}
                       device={device}
                       isSelected={isSelected}
-                      onToggleCompare={handleToggleCompare}
+                      onToggleCompare={toggleCompare}
                     />
                   );
                 })}
