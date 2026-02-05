@@ -11,5 +11,5 @@ export const COMPARE_RULES = {
   Charging: { type: "text" },
   OS: { type: "text" },
 
-  Availability: { type: "boolean" }
+  Availability: { type: "status" }
 };

@@ -6,7 +6,10 @@ const CompareCell = ({ device, spec, isBest }) => {
   const formatted = normalizeSpecValue(spec, rawValue);
 
   const baseClass ="p-4 text-center border-l border-slate-700 transition";
-  const emphasisClass = isBest
+
+  const emphasisClass = spec==="Availability"
+    ? "text-slate-300"
+    : isBest
     ? "bg-emerald-500/10 text-emerald-300 font-semibold"
     : "text-slate-400";
 
@@ -29,7 +32,7 @@ const CompareCell = ({ device, spec, isBest }) => {
 
   if (formatted.type === "price") {
     return (
-      <div className="p-4 text-center border-l border-slate-700">
+      <div className={`${baseClass} ${emphasisClass}`}>
         ₹{formatted.value.toLocaleString("en-IN")}
       </div>
     );
