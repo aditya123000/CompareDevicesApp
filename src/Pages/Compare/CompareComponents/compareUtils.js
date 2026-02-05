@@ -38,6 +38,14 @@ export const extractSpecs = (devices) => {
   });
 };
 
+export const extractNumber = (value) => {
+  if (typeof value === "number") return value;
+  if (typeof value !== "string") return null;
+
+  const match = value.match(/\d+/);
+  return match ? Number(match[0]) : null;
+};
+
 
 export const getSpecValue = (device, spec) => {
   const mappedKey = SPEC_KEY_MAP[spec];
