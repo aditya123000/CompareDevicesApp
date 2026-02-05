@@ -1,7 +1,7 @@
 import React from "react";
 import CompareCell from "./CompareCell";
-import { getBestIndices } from "./getBestIndices";
-import { getSpecValue } from "./compareUtils";
+import { getBestIndices } from "../CompareLogic/getBestIndices";
+import { getSpecValue } from "../CompareLogic/specExtractors";
 
 const CompareRow = ({ spec, devices, gridTemplate }) => {
   const values = devices.map((device) =>

@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react';
 import Spinner from "../components/Global-components/Spinner";
 import { getDevices } from "../Api/deviceApi";
 import DeviceCard from '../components/Device-components/DeviceCard';
-import { useCompare } from "../context/CompareContext";
+import { useCompare } from "./Compare/context/CompareContext";
 import { useNavigate } from "react-router-dom";
 
 const Devices = () => {

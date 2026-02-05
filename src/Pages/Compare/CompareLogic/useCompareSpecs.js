@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { extractSpecs } from "./compareUtils";
+import { extractSpecs } from "./specExtractors";
 
 export const useCompareSpecs = (devices) => {
   return useMemo(() => {

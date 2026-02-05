@@ -1,5 +1,6 @@
 import React from "react";
-import { getSpecValue, normalizeSpecValue } from "./compareUtils";
+import { getSpecValue } from "../CompareLogic/specExtractors";
+import { normalizeSpecValue } from "../CompareLogic/valueNormalizers";
 
 const CompareCell = ({ device, spec, isBest }) => {
   const rawValue = getSpecValue(device, spec);

@@ -1,6 +1,6 @@
 import React from "react";
 import CompareTable from "../Compare/CompareComponents/CompareTable";
-import { useCompare } from "../../context/CompareContext";
+import { useCompare } from "../Compare/context/CompareContext";
 
 const Compare = () => {
 

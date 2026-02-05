@@ -1,5 +1,5 @@
 import { COMPARE_RULES } from "./compareRules";
-import { extractNumber } from "./compareUtils";
+import { extractNumber } from "../CompareLogic/valueParsors";
 
 export const getBestIndices = (spec, values) => {
   const rule = COMPARE_RULES[spec];

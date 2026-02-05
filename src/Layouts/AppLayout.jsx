@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { CompareProvider } from "../context/CompareContext";
+import { CompareProvider } from "../Pages/Compare/context/CompareContext";
 
 const AppLayout = () => {
   return (
