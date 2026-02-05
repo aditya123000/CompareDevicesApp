@@ -58,15 +58,7 @@ const Devices = () => {
           </p>
         </section>
         {selectedDevices.length >= 2 && (
-          <div className="
-            fixed bottom-4 left-1/2 -translate-x-1/2
-            z-50
-            bg-slate-800 border border-slate-700
-            rounded-lg
-            px-6 py-3
-            flex items-center gap-4
-            shadow-lg
-          ">
+          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-slate-800 border border-slate-700 rounded-lg px-6 py-3 flex items-center gap-4 shadow-lg">
             <p className="text-slate-300 text-sm">
               {selectedDevices.length} device
               {selectedDevices.length > 1 ? "s" : ""} selected
