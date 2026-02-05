@@ -7,8 +7,14 @@
     "price": 74999,
     "available": true,
     "display": "6.1\" AMOLED",
+    "refreshRate": "120Hz",
     "processor": "Snapdragon 8 Gen 2",
-    "battery": "3900 mAh"
+    "ram": "8 GB",
+    "storage": "256 GB",
+    "camera": "50 MP",
+    "battery": "3900 mAh",
+    "charging": "25W Fast Charging",
+    "os": "Android 13"
   },
   {
     "id": "2",
@@ -17,78 +23,46 @@
     "price": 79999,
     "available": true,
     "display": "6.1\" OLED",
+    "refreshRate": "60Hz",
     "processor": "A15 Bionic",
-    "battery": "3279 mAh"
+    "ram": "6 GB",
+    "storage": "128 GB",
+    "camera": "12 MP Dual",
+    "battery": "3279 mAh",
+    "charging": "20W Fast Charging",
+    "os": "iOS 16"
   },
   {
     "id": "3",
-    "brand": "Xiaomi",
-    "model": "Mi 11",
-    "price": 59999,
-    "available": false,
-    "display": "6.81\" AMOLED",
-    "processor": "Snapdragon 888",
-    "battery": "4600 mAh"
-  },
-  {
-    "id": "4",
     "brand": "OnePlus",
     "model": "OnePlus 11",
     "price": 61999,
     "available": true,
     "display": "6.7\" AMOLED",
+    "refreshRate": "120Hz",
     "processor": "Snapdragon 8 Gen 2",
-    "battery": "5000 mAh"
+    "ram": "16 GB",
+    "storage": "256 GB",
+    "camera": "50 MP Triple",
+    "battery": "5000 mAh",
+    "charging": "100W SuperVOOC",
+    "os": "OxygenOS 13"
   },
   {
-    "id": "5",
+    "id": "4",
     "brand": "Google",
     "model": "Pixel 7",
     "price": 59999,
     "available": true,
     "display": "6.3\" OLED",
+    "refreshRate": "90Hz",
     "processor": "Google Tensor G2",
-    "battery": "4355 mAh"
-  },
-  {
-    "id": "6",
-    "brand": "Samsung",
-    "model": "Galaxy A54",
-    "price": 38999,
-    "available": false,
-    "display": "6.4\" Super AMOLED",
-    "processor": "Exynos 1380",
-    "battery": "5000 mAh"
-  },
-  {
-    "id": "7",
-    "brand": "Apple",
-    "model": "iPhone SE",
-    "price": 49999,
-    "available": true,
-    "display": "4.7\" Retina IPS",
-    "processor": "A15 Bionic",
-    "battery": "2018 mAh"
-  },
-  {
-    "id": "8",
-    "brand": "Nothing",
-    "model": "Phone (2)",
-    "price": 44999,
-    "available": true,
-    "display": "6.7\" OLED",
-    "processor": "Snapdragon 8+ Gen 1",
-    "battery": "4700 mAh"
-  },
-  {
-    "id": "9",
-    "brand": "Motorola",
-    "model": "Edge 40",
-    "price": 29999,
-    "available": true,
-    "display": "6.55\" pOLED",
-    "processor": "Dimensity 8020",
-    "battery": "4400 mAh"
+    "ram": "8 GB",
+    "storage": "128 GB",
+    "camera": "50 MP",
+    "battery": "4355 mAh",
+    "charging": "20W Fast Charging",
+    "os": "Android 13"
   }
 ]
 }
