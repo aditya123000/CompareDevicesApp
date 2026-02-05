@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const CompareContext = createContext();
 
@@ -21,9 +21,7 @@ export const CompareProvider = ({ children }) => {
   };
 
   return (
-    <CompareContext.Provider
-      value={{ selectedDevices, toggleCompare }}
-    >
+    <CompareContext.Provider value={{ selectedDevices, toggleCompare }}>
       {children}
     </CompareContext.Provider>
   );
