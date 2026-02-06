@@ -6,6 +6,7 @@ import Home from "./Pages/Home";
 import Devices from "./Pages/Devices/DevicesPage";
 import Compare from "./Pages/Compare/Compare";
 import NotFound from "./Pages/NotFound";
+import DeviceDetailsPage from "./Pages/DeviceDetails/DeviceDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
           path: "/compare", 
           element: <Compare /> 
         },
+        {
+          path:"/devices/:id",
+          element:<DeviceDetailsPage />,
+        }
       ],
     },
     ],

@@ -12,8 +12,6 @@ const Devices = () => {
   const { selectedDevices,toggleCompare } = useCompare();
 
 
-
-
   useEffect(()=>{
     const fetchDevices=async()=>{
       try{

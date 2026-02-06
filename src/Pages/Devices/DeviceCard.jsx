@@ -1,16 +1,16 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 
-const DeviceCard = ({device,isSelected,onToggleCompare,id}) => {
+const DeviceCard = ({device,isSelected,onToggleCompare}) => {
     const navigate = useNavigate();
-    const {brand,model,price,available} = device;
+    const {id,brand,model,price,available} = device;
 
     if (!device || Object.keys(device).length === 0) {
         return null;
     }
 
   return (
-    <div onClick={() => navigate(`/devices/${id}`)} className='p-6 rounded-lg bg-slate-800 border border-slate-700 transition hover:border-sky-400/40'>
+    <div onClick={() =>  navigate(`/devices/${id}`)} className='p-6 rounded-lg bg-slate-800 border border-slate-700 transition hover:border-sky-400/40'>
         <h3 className='text-lg font-semibold text-slate-50'>
             {brand} {model}
         </h3>

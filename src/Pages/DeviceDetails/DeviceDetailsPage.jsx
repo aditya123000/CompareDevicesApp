@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getDeviceById } from "@/services/deviceService";
-import { useCompare } from "@/Pages/Compare/CompareContext/CompareContext";
+import { getDeviceById } from "../services/deviceServices";
+import { useCompare } from ".././Compare/context/CompareContext";
+import Spinner from "../../components/Global-components/Spinner";
 
 const DeviceDetailsPage = () => {
+  console.log("🔥 DeviceDetailsPage rendered");
   const { id } = useParams();
+  console.log("🧩 route param id:", id);
   const navigate = useNavigate();
   const { addToCompare } = useCompare();
 
@@ -12,7 +15,9 @@ const DeviceDetailsPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("✅ useEffect ran, id =", id);
     const loadDevice = async () => {
+      setLoading(true);
       const data = await getDeviceById(id);
       setDevice(data);
       setLoading(false);
@@ -22,12 +27,14 @@ const DeviceDetailsPage = () => {
   }, [id]);
 
   if (loading) {
-    return <div className="p-6 text-slate-400">Loading device…</div>;
+    return <Spinner loading={loading} />;
   }
 
   if (!device) {
     return <div className="p-6 text-red-400">Device not found</div>;
   }
+
+
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
