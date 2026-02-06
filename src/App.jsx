@@ -30,6 +30,10 @@ const router = createBrowserRouter([
         {
           path:"/devices/:id",
           element:<DeviceDetailsPage />,
+        },
+        {
+          path:"*",
+          element:<NotFound title="404" message="This page does not exist."/>
         }
       ],
     },

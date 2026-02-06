@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getDeviceById } from "../services/deviceServices";
 import { useCompare } from ".././Compare/context/CompareContext";
 import Spinner from "../../components/Global-components/Spinner";
+import { Navigate } from "react-router-dom";
+
 
 const DeviceDetailsPage = () => {
   console.log("🔥 DeviceDetailsPage rendered");
@@ -31,7 +33,7 @@ const DeviceDetailsPage = () => {
   }
 
   if (!device) {
-    return <div className="p-6 text-red-400">Device not found</div>;
+    return <Navigate to="/not-found" replace />;
   }
 
 
