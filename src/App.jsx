@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./Layouts/MainLayout";
 import AppLayout from "./Layouts/AppLayout";
 import Home from "./Pages/Home";
-import Devices from "./Pages/Devices";
+import Devices from "./Pages/Devices/DevicesPage";
 import Compare from "./Pages/Compare/Compare";
 import NotFound from "./Pages/NotFound";
 

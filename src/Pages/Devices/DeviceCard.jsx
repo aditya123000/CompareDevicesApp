@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom";
 
-const DeviceCard = ({device,isSelected,onToggleCompare}) => {
+const DeviceCard = ({device,isSelected,onToggleCompare,id}) => {
+    const navigate = useNavigate();
     const {brand,model,price,available} = device;
 
     if (!device || Object.keys(device).length === 0) {
@@ -8,7 +10,7 @@ const DeviceCard = ({device,isSelected,onToggleCompare}) => {
     }
 
   return (
-    <div className='p-6 rounded-lg bg-slate-800 border border-slate-700 transition hover:border-sky-400/40'>
+    <div onClick={() => navigate(`/devices/${id}`)} className='p-6 rounded-lg bg-slate-800 border border-slate-700 transition hover:border-sky-400/40'>
         <h3 className='text-lg font-semibold text-slate-50'>
             {brand} {model}
         </h3>
@@ -23,7 +25,9 @@ const DeviceCard = ({device,isSelected,onToggleCompare}) => {
             </p>
         )}
         <button
-            onClick={() => onToggleCompare(device)}
+            onClick={(e) => {
+                e.stopPropagation();
+                onToggleCompare(device);}}
             className={`
                 mt-4 w-full py-2 rounded-md text-sm font-medium transition
                 ${
