@@ -14,6 +14,8 @@ import NotFound from "./pages/NotFound";
 import DeviceDetailsPage from "./pages/deviceDetails/deviceDetailsPage";
 import AuthPage from "./pages/auth/AuthPage";
 import ProfilePage from "./pages/auth/ProfilePage";
+import Dashboard from "./pages/Dashboard";
+import LibraryPage from "./pages/LibraryPage";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +67,14 @@ const router = createBrowserRouter([
         {
           path: "/profile",
           element: <ProfilePage />,
+        },
+        {
+          path: "/dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "/library",
+          element: <LibraryPage />,
         },
         {
           path:"/devices/:id",

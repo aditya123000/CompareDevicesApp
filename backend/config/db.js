@@ -150,6 +150,11 @@ const createDevicesTable = async () => {
   await query(`
     CREATE INDEX IF NOT EXISTS idx_devices_category ON devices (category);
   `);
+
+  await query(`
+    CREATE INDEX IF NOT EXISTS idx_devices_catalog_search
+    ON devices (brand, model, id);
+  `);
 };
 
 const createUsersTable = async () => {
@@ -173,6 +178,13 @@ const createUsersTable = async () => {
   await query(`
     CREATE INDEX IF NOT EXISTS idx_users_email ON users (email);
   `);
+};
+
+const createProductTables = async () => {
+  await query("CREATE TABLE IF NOT EXISTS user_sessions (id UUID PRIMARY KEY, user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE, token_hash TEXT NOT NULL UNIQUE, expires_at TIMESTAMPTZ NOT NULL, revoked_at TIMESTAMPTZ, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())");
+  await query("CREATE INDEX IF NOT EXISTS idx_user_sessions_active ON user_sessions (user_id, expires_at) WHERE revoked_at IS NULL");
+  await query("CREATE TABLE IF NOT EXISTS user_favorites (user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE, device_id TEXT NOT NULL REFERENCES devices(id) ON DELETE CASCADE, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), PRIMARY KEY (user_id, device_id))");
+  await query("CREATE TABLE IF NOT EXISTS saved_comparisons (id UUID PRIMARY KEY, user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE, name TEXT NOT NULL, device_ids JSONB NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())");
 };
 
 const seedDevicesFromJson = async (seedFilePath = defaultSeedFilePath) => {
@@ -247,6 +259,7 @@ const replaceDevicesFromJson = async (seedFilePath = defaultSeedFilePath) => {
 const initializeDatabase = async () => {
   await createDevicesTable();
   await createUsersTable();
+  await createProductTables();
 
   const shouldAutoSeed = String(process.env.AUTO_SEED_DB ?? "true").toLowerCase() !== "false";
 
@@ -264,6 +277,7 @@ const initializeDatabase = async () => {
 export {
   createDevicesTable,
   createUsersTable,
+  createProductTables,
   getPool,
   initializeDatabase,
   query,

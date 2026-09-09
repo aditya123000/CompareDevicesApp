@@ -1,9 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import DeviceImage from "../../components/DeviceImage";
+import { FiHeart } from "react-icons/fi";
+import { useAuth } from "../../context/useAuth";
+import { addFavorite } from "../../Api/libraryApi";
 
 const DeviceCard = ({ device, isSelected, onToggleCompare }) => {
   const navigate = useNavigate();
+  const { token, isAuthenticated } = useAuth();
+  const [saved, setSaved] = React.useState(false);
 
   if (!device || typeof device !== "object" || Object.keys(device).length === 0) {
     return null;
@@ -57,6 +62,15 @@ const DeviceCard = ({ device, isSelected, onToggleCompare }) => {
       >
         {isSelected ? "Remove from Compare" : "Add to Compare"}
       </button>
+      {isAuthenticated && (
+        <button
+          type="button"
+          onClick={async (event) => { event.stopPropagation(); await addFavorite(id, token); setSaved(true); }}
+          className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md py-2 text-sm font-medium text-slate-500 transition hover:bg-rose-500/10 hover:text-rose-500 dark:text-slate-300"
+        >
+          <FiHeart className={saved ? "fill-rose-500 text-rose-500" : ""} /> {saved ? "Saved to Library" : "Save to Library"}
+        </button>
+      )}
     </article>
   );
 };

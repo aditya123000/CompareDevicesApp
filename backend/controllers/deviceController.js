@@ -1,14 +1,20 @@
-import {
-  getAllDevices,
-  getDeviceById as getDeviceByIdFromDb,
-} from "../repositories/deviceRepository.js";
+import { getDeviceById as getDeviceByIdFromDb, getDeviceCatalog } from "../repositories/deviceRepository.js";
+import { sanitizeDeviceFilters } from "../repositories/deviceQuery.js";
 
 //Get all devices
 const getDevices = async (req, res, next) => {
   try {
-    const limit = Number.parseInt(req.query.limit, 10);
-    const devices = await getAllDevices(Number.isNaN(limit) ? undefined : limit);
-    return res.status(200).json(devices);
+    const filters = sanitizeDeviceFilters(req.query);
+    const { devices, total } = await getDeviceCatalog(filters);
+    return res.status(200).json({
+      data: devices,
+      meta: {
+        page: filters.page,
+        limit: filters.limit,
+        total,
+        totalPages: Math.ceil(total / filters.limit),
+      },
+    });
   } catch (error) {
     return next(error);
   }

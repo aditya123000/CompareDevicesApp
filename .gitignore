@@ -10,12 +10,21 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+coverage
+.cache
+.turbo
+.vercel
+.netlify
+playwright-report
+test-results
+*.tsbuildinfo
 *.local
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
+.claude/settings.local.json
 .DS_Store
 *.suo
 *.ntvs*

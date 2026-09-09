@@ -9,6 +9,11 @@ import logger from "./middleware/logger.js";
 import notFound from "./middleware/notFound.js";
 import errorHandler from "./middleware/errorHandler.js";
 import { initializeDatabase } from "./config/db.js";
+import { query } from "./config/db.js";
+import requestContext from "./middleware/requestContext.js";
+import securityHeaders from "./middleware/securityHeaders.js";
+import { createRateLimit } from "./middleware/rateLimit.js";
+import libraryRoutes from "./routes/libraryRoutes.js";
 
 dotenv.config();
 
@@ -58,8 +63,12 @@ const corsOptions = {
 const createApp = () => {
   const app = express();
 
+  app.set("trust proxy", 1);
+  app.disable("x-powered-by");
+  app.use(requestContext);
+  app.use(securityHeaders);
   app.use(cors(corsOptions));
-  app.use(express.json());
+  app.use(express.json({ limit: "100kb" }));
   app.use(logger);
 
   app.get("/", (_req, res) => {
@@ -205,12 +214,18 @@ const createApp = () => {
     `);
   });
 
-  app.get("/api/health", (_req, res) => {
-    res.status(200).json({ status: "ok" });
+  app.get("/api/health", async (req, res) => {
+    try {
+      await query("SELECT 1");
+      res.status(200).json({ status: "ok", service: "specmine-api", requestId: req.requestId, timestamp: new Date().toISOString() });
+    } catch {
+      res.status(503).json({ status: "degraded", service: "specmine-api", requestId: req.requestId });
+    }
   });
 
-  app.use("/api/devices", deviceRoutes);
-  app.use("/api/auth", authRoutes);
+  app.use("/api/devices", createRateLimit({ max: 120, keyPrefix: "devices" }), deviceRoutes);
+  app.use("/api/auth", createRateLimit({ windowMs: 15 * 60_000, max: 20, keyPrefix: "auth" }), authRoutes);
+  app.use("/api/library", createRateLimit({ max: 120, keyPrefix: "library" }), libraryRoutes);
 
   app.use(notFound);
   app.use(errorHandler);

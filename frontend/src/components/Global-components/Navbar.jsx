@@ -17,7 +17,7 @@ const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const { isAuthenticated, logout, user } = useAuth();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if (typeof window !== "undefined") {
       window.sessionStorage.setItem(
         AUTH_TOAST_STORAGE_KEY,
@@ -29,7 +29,7 @@ const Navbar = () => {
       );
     }
 
-    logout();
+    await logout();
     navigate("/");
   };
 
@@ -51,6 +51,8 @@ const Navbar = () => {
           <NavLink to="/compare" end className={linkClass}>Compare</NavLink>
           {isAuthenticated ? (
             <>
+              <NavLink to="/dashboard" end className={linkClass}>Dashboard</NavLink>
+              <NavLink to="/library" end className={linkClass}>Library</NavLink>
               <span className="hidden text-sm text-slate-600 dark:text-slate-300 md:inline">
                 {user?.name}
               </span>

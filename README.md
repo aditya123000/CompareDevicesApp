@@ -2,6 +2,8 @@
 
 SpecMine is a modern, full-stack web application that lets users intelligently search, explore, and compare the technical specifications of electronic devices. It bridges the gap between complex hardware details and a clean, user-friendly interface, simplifying the consumer decision-making process.
 
+> **Production-minded foundation:** SpecMine includes a paginated catalog API, parameterized database access, request correlation IDs, JSON observability logs, hardened headers, per-route rate limits, database-backed health checks, database indexes, automated tests, and a GitHub Actions quality gate. See [architecture notes](docs/ARCHITECTURE.md).
+
 ## Key Features
 
 - **Advanced Device Search:** Quickly locate specific devices by brand name, model number, or product category using an interactive search bar with live autocomplete suggestions.

@@ -7,6 +7,8 @@ import { getDevices } from "../../Api/deviceApi";
 import SearchBar from "../../components/Global-components/SearchBar";
 import DeviceImage from "../../components/DeviceImage";
 import { getDeviceSectionKey, getSectionMeta } from "../devices/deviceSections";
+import { useAuth } from "../../context/useAuth";
+import { saveComparison } from "../../Api/libraryApi";
 
 const buildPopularComparisons = (devices) => {
   const pairs = [];
@@ -33,7 +35,6 @@ const getDeviceLabel = (device) => `${device?.brand || ""} ${device?.model || ""
 const Compare = () => {
   const {
     selectedDevices,
-    compareError,
     setComparedDevices,
     replaceComparedDeviceAt,
     removeComparedDeviceAt,
@@ -42,6 +43,8 @@ const Compare = () => {
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [activeSlot, setActiveSlot] = useState(0);
+  const [saveState, setSaveState] = useState("");
+  const { token, isAuthenticated } = useAuth();
 
   const compareDevices = useMemo(() => selectedDevices.filter(Boolean), [selectedDevices]);
   const canCompare = compareDevices.length >= 2;
@@ -149,6 +152,14 @@ const Compare = () => {
     }
   };
 
+  const handleSaveComparison = async () => {
+    if (!isAuthenticated) { setSaveState("Sign in to save comparisons."); return; }
+    try {
+      await saveComparison({ name: compareDevices.map(getDeviceLabel).join(" vs "), deviceIds: compareDevices.map((device) => device.id) }, token);
+      setSaveState("Saved to your library.");
+    } catch (error) { setSaveState(error.message); }
+  };
+
   return (
     <div className="flex flex-col gap-8">
       {/* 1. Comparison Results Section at the TOP */}
@@ -171,6 +182,7 @@ const Compare = () => {
           </div>
 
           <div className="flex items-center gap-3">
+            <button type="button" disabled={!canCompare} onClick={handleSaveComparison} className="rounded-lg border border-sky-400/40 bg-sky-400/10 px-3 py-2 text-sm font-semibold text-sky-700 transition hover:bg-sky-400/20 disabled:cursor-not-allowed disabled:opacity-40 dark:text-sky-300">Save comparison</button>
             <a
               href="#device-selector"
               onClick={(e) => {
@@ -183,6 +195,7 @@ const Compare = () => {
             </a>
           </div>
         </div>
+        {saveState && <p className="text-sm font-medium text-sky-600 dark:text-sky-300">{saveState}</p>}
 
         {loading ? (
           <div className="animate-pulse rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800/50">

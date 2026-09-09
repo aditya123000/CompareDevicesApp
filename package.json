@@ -4,7 +4,10 @@
   "description": "SpecMine is a modern, comprehensive web application designed to help users intelligently search, explore, and compare the technical specifications of electronic devices. It bridges the gap between complex hardware details and a user-friendly interface, simplifying the consumer decision-making process.",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\""
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "test": "npm run test --prefix backend",
+    "lint": "npm run lint --prefix frontend",
+    "build": "npm run build --prefix frontend"
   },
   "repository": {
     "type": "git",

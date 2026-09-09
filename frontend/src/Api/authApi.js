@@ -35,5 +35,6 @@ const loginUser = (payload) => createAuthRequest("/login", payload);
 const getCurrentUser = (token) => createAuthRequest("/me", null, token);
 const updateProfile = (payload, token) => createAuthRequest("/profile", payload, token);
 const changePassword = (payload, token) => createAuthRequest("/password", payload, token);
+const logoutUser = (token) => createAuthRequest("/logout", {}, token);
 
-export { getCurrentUser, loginUser, registerUser, updateProfile, changePassword };
+export { getCurrentUser, loginUser, logoutUser, registerUser, updateProfile, changePassword };

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContextObject";
-import { getCurrentUser, loginUser as loginRequest, registerUser as registerRequest, updateProfile as updateProfileRequest, changePassword as changePasswordRequest } from "../Api/authApi";
+import { getCurrentUser, loginUser as loginRequest, logoutUser as logoutRequest, registerUser as registerRequest, updateProfile as updateProfileRequest, changePassword as changePasswordRequest } from "../Api/authApi";
 
 const STORAGE_KEY = "auth_session";
 
@@ -108,7 +108,8 @@ export const AuthProvider = ({ children }) => {
     return data;
   };
 
-  const logout = () => {
+  const logout = async () => {
+    if (token) await logoutRequest(token).catch(() => {});
     setToken("");
     setUser(null);
   };

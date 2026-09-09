@@ -1,17 +1,44 @@
 import { getApiUrl } from "./apiBase.js";
 
-export const getDevices = async () => {
-  const response = await fetch(getApiUrl("/api/devices"));
+const getDevicePage = async (params = {}) => {
+  const searchParams = new URLSearchParams(
+    Object.entries(params).filter(([, value]) => value !== undefined && value !== null && value !== "")
+  );
+  const suffix = searchParams.size ? `?${searchParams}` : "";
+  const response = await fetch(getApiUrl(`/api/devices${suffix}`));
 
   if (!response.ok) {
     throw new Error("Failed to fetch devices");
   }
 
-  const devices = await response.json();
+  const payload = await response.json();
+  const devices = Array.isArray(payload) ? payload : payload.data;
 
   if (!Array.isArray(devices)) {
-    return [];
+    return { data: [], meta: payload?.meta ?? { page: 1, totalPages: 1 } };
   }
 
-  return devices.filter((device) => device && typeof device === "object");
+  return {
+    data: devices.filter((device) => device && typeof device === "object"),
+    meta: payload?.meta ?? { page: 1, totalPages: 1 },
+  };
 };
+
+// Keeps existing UI consumers simple while the API remains safely paginated.
+// New screens can use getDevicePage for server-driven pagination and filters.
+export const getDevices = async (params = {}) => {
+  const firstPage = await getDevicePage({ ...params, page: 1, limit: 100 });
+  const pageCount = Math.min(Number(firstPage.meta?.totalPages) || 1, 50);
+
+  if (pageCount === 1) return firstPage.data;
+
+  const remainingPages = await Promise.all(
+    Array.from({ length: pageCount - 1 }, (_, index) =>
+      getDevicePage({ ...params, page: index + 2, limit: 100 })
+    )
+  );
+
+  return firstPage.data.concat(...remainingPages.map((page) => page.data));
+};
+
+export { getDevicePage };

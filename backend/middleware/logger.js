@@ -1,16 +1,16 @@
-import "colors";
-
 const logger = (req, res, next) => {
-  const methodColors = {
-    GET: "green",
-    POST: "yellow",
-    PUT: "blue",
-    DELETE: "red",
-  };
-
-  const color = methodColors[req.method] || "white";
-
-  console.log(`${req.method} ${req.protocol}://${req.get("host")}${req.originalUrl}`[color]);
+  const startedAt = performance.now();
+  res.on("finish", () => {
+    console.info(JSON.stringify({
+      level: "info",
+      event: "http_request",
+      requestId: req.requestId,
+      method: req.method,
+      path: req.originalUrl,
+      statusCode: res.statusCode,
+      durationMs: Math.round(performance.now() - startedAt),
+    }));
+  });
   next();
 };
 

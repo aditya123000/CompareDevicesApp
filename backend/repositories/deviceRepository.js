@@ -1,5 +1,6 @@
 import { query } from "../config/db.js";
 import { normalizeDevice } from "../utils/normalizeDevice.js";
+import { buildDeviceCatalogQuery } from "./deviceQuery.js";
 
 const buildDeviceFromRow = (row) => {
   const { payload, ...rowFields } = row;
@@ -33,6 +34,19 @@ const getAllDevices = async (limit) => {
   return rows.map(buildDeviceFromRow).filter((device) => device !== null);
 };
 
+const getDeviceCatalog = async (filters) => {
+  const { countSql, dataSql, params, filterParams } = buildDeviceCatalogQuery(filters);
+  const [countResult, dataResult] = await Promise.all([
+    query(countSql, filterParams),
+    query(dataSql, params),
+  ]);
+
+  return {
+    devices: dataResult.rows.map(buildDeviceFromRow).filter((device) => device !== null),
+    total: countResult.rows[0]?.count ?? 0,
+  };
+};
+
 const getDeviceById = async (id) => {
   const { rows } = await query(
     "SELECT * FROM devices WHERE id = $1",
@@ -41,4 +55,4 @@ const getDeviceById = async (id) => {
   return rows[0] ? buildDeviceFromRow(rows[0]) : null;
 };
 
-export { getAllDevices, getDeviceById };
+export { getAllDevices, getDeviceById, getDeviceCatalog };

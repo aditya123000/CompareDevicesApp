@@ -1,15 +1,11 @@
 const errorHandler = (err, req, res, _next) => {
   void _next;
 
-  console.error("========== ERROR ==========");
-  console.error(err);
-  console.error(err.stack);
-  console.error("===========================");
-
   const statusCode = res.statusCode >= 400 ? res.statusCode : err.status || 500;
-  const message = err.message || "Server Error";
+  console.error(JSON.stringify({ level: "error", event: "request_failed", requestId: req.requestId, statusCode, message: err.message, stack: err.stack }));
+  const message = statusCode >= 500 ? "Internal server error" : err.message || "Request failed";
 
-  return res.status(statusCode).json({ message });
+  return res.status(statusCode).json({ message, requestId: req.requestId });
 };
 
 export default errorHandler;

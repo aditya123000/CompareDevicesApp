@@ -1,0 +1,19 @@
+import { useEffect, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { FiBookmark, FiHeart, FiTrash2 } from "react-icons/fi";
+import { useAuth } from "../context/useAuth";
+import { getLibrary, removeComparison, removeFavorite } from "../Api/libraryApi";
+import { getDevices } from "../Api/deviceApi";
+import { useCompare } from "./compare/context/useCompare";
+const LibraryPage = () => {
+  const { token, isAuthenticated, isLoading } = useAuth(); const { setComparedDevices } = useCompare(); const navigate = useNavigate(); const [library, setLibrary] = useState({ favorites: [], comparisons: [] }); const [error, setError] = useState("");
+  useEffect(() => { if (token) getLibrary(token).then(setLibrary).catch((e) => setError(e.message)); }, [token]);
+  if (!isLoading && !isAuthenticated) return <Navigate to="/login" replace />;
+  const removeFav = async (id) => { await removeFavorite(id, token); setLibrary((v) => ({ ...v, favorites: v.favorites.filter((d) => d.id !== id) })); };
+  const removeSaved = async (id) => { await removeComparison(id, token); setLibrary((v) => ({ ...v, comparisons: v.comparisons.filter((c) => c.id !== id) })); };
+  const restoreComparison = async (comparison) => { try { const devices = await getDevices(); setComparedDevices(comparison.deviceIds.map((id) => devices.find((device) => device.id === id)).filter(Boolean)); navigate("/compare"); } catch { setError("Could not restore that comparison."); } };
+  return <section className="space-y-8"><div><p className="text-sm font-bold uppercase tracking-[.24em] text-sky-600">Personal workspace</p><h1 className="mt-2 text-4xl font-black text-slate-900 dark:text-white">Your library</h1><p className="mt-2 text-slate-600 dark:text-slate-400">Saved devices and comparisons, ready when your decision needs another look.</p></div>{error && <p className="rounded-xl bg-rose-50 p-4 text-rose-600">{error}</p>}<div className="grid gap-5 lg:grid-cols-2"><Panel icon={<FiHeart className="text-sky-500"/>} title="Favorite devices">{library.favorites.length ? library.favorites.map((d) => <div key={d.id} className="flex items-center justify-between rounded-xl bg-slate-50 p-3 dark:bg-slate-900/60"><Link to={`/devices/${d.id}`} className="font-semibold hover:text-sky-600">{d.brand} {d.model}</Link><button onClick={() => removeFav(d.id)} className="p-2 text-slate-400 hover:text-rose-500"><FiTrash2/></button></div>) : <Empty text="No favorites yet—save devices you want to revisit." to="/devices" />}</Panel><Panel icon={<FiBookmark className="text-sky-500"/>} title="Saved comparisons">{library.comparisons.length ? library.comparisons.map((c) => <div key={c.id} className="flex items-center justify-between rounded-xl bg-slate-50 p-3 dark:bg-slate-900/60"><button className="text-left" onClick={() => restoreComparison(c)}><p className="font-semibold">{c.name}</p><p className="text-xs text-slate-500">{c.deviceIds.length} devices · Restore</p></button><button onClick={() => removeSaved(c.id)} className="p-2 text-slate-400 hover:text-rose-500"><FiTrash2/></button></div>) : <Empty text="Your saved comparisons will appear here." to="/compare" />}</Panel></div></section>;
+};
+const Panel = ({ icon, title, children }) => <section className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800/60"><div className="flex items-center gap-2">{icon}<h2 className="font-bold">{title}</h2></div><div className="mt-5 space-y-3">{children}</div></section>;
+const Empty = ({ text, to }) => <div className="rounded-xl border border-dashed border-slate-300 p-6 text-sm text-slate-500 dark:border-slate-600"><p>{text}</p><Link className="mt-3 inline-block font-semibold text-sky-600" to={to}>Get started →</Link></div>;
+export default LibraryPage;

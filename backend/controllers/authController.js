@@ -1,16 +1,16 @@
 import { createUser, findUserByEmail, updateUser } from "../repositories/userRepository.js";
 import { hashPassword, verifyPassword } from "../utils/passwords.js";
-import { signJwt } from "../utils/jwt.js";
+import { createSession, revokeSession, revokeUserSessions } from "../repositories/sessionRepository.js";
 
-const formatAuthResponse = (user) => ({
-  token: signJwt({ sub: user.id, email: user.email }),
-  user: {
+const formatAuthResponse = async (user) => {
+  const session = await createSession(user.id);
+  return { token: session.token, expiresAt: session.expiresAt, user: {
     id: user.id,
     name: user.name,
     email: user.email,
     createdAt: user.createdAt,
-  },
-});
+  }};
+};
 
 const formatUserResponse = (user) => ({
   id: user.id,
@@ -45,7 +45,7 @@ const registerUser = async (req, res, next) => {
     const passwordHash = await hashPassword(password);
     const user = await createUser({ name, email, passwordHash });
 
-    res.status(201).json(formatAuthResponse(user));
+    res.status(201).json(await formatAuthResponse(user));
   } catch (error) {
     next(error);
   }
@@ -75,7 +75,7 @@ const loginUser = async (req, res, next) => {
       throw new Error("Invalid email or password");
     }
 
-    res.status(200).json(formatAuthResponse(user));
+    res.status(200).json(await formatAuthResponse(user));
   } catch (error) {
     next(error);
   }
@@ -146,6 +146,7 @@ const changePassword = async (req, res, next) => {
 
     const newPasswordHash = await hashPassword(newPassword);
     const updatedUser = await updateUser(userId, { passwordHash: newPasswordHash });
+    await revokeUserSessions(userId);
 
     res.status(200).json({ user: formatUserResponse(updatedUser) });
   } catch (error) {
@@ -153,4 +154,8 @@ const changePassword = async (req, res, next) => {
   }
 };
 
-export { getCurrentUser, loginUser, registerUser, updateProfile, changePassword };
+const logoutUser = async (req, res, next) => {
+  try { await revokeSession(req.sessionToken); res.status(204).end(); } catch (error) { next(error); }
+};
+
+export { getCurrentUser, loginUser, logoutUser, registerUser, updateProfile, changePassword };

@@ -1,5 +1,4 @@
-import { findUserById } from "../repositories/userRepository.js";
-import { verifyJwt } from "../utils/jwt.js";
+import { findActiveSessionUser } from "../repositories/sessionRepository.js";
 
 const protect = async (req, res, next) => {
   try {
@@ -11,20 +10,15 @@ const protect = async (req, res, next) => {
     }
 
     const token = authHeader.slice(7);
-    const payload = verifyJwt(token);
-    const user = await findUserById(payload.sub);
+    const user = await findActiveSessionUser(token);
 
     if (!user) {
       res.status(401);
       throw new Error("User not found for this token");
     }
 
-    req.user = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      createdAt: user.createdAt,
-    };
+    req.user = user;
+    req.sessionToken = token;
 
     next();
   } catch (error) {
